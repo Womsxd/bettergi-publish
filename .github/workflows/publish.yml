@@ -78,7 +78,7 @@ jobs:
           path: dist/
 
   pack:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: [build_main, build_map_editor, build_scripts]
     steps:
       - uses: actions/checkout@v4
@@ -95,16 +95,14 @@ jobs:
           name: scripts
           path: dist/BetterGI/Assets/Web/ScriptRepo
       - run: |
-          sudo apt update
-          sudo apt install zstd p7zip-full -y
-
-          for file in *.zst; do
-            if [ -f "$file" ]; then
-              output_file="dist/BetterGI/Assets/Map/${file%.zst}"
-              zstd -d "$file" -o "$output_file"
-              echo "$file -> $output_file"
-            fi
-          done
+          Get-ChildItem -Filter *.zst | ForEach-Object {
+              if ($_.PSIsContainer -eq $false) {
+                  $file = $_.Name
+                  $output_file = "dist\BetterGI\Assets\Map\$($file -replace '.zst$', '')"
+                  & zstd -d $file -o $output_file
+                  Write-Host "$file -> $output_file"
+              }
+          }
 
           cd dist
           7z a "BetterGI_v${{ needs.build_main.outputs.version }}.7z" BetterGI -t7z -mx=5 -mf=BCJ2 -r -y
