@@ -35,9 +35,9 @@ jobs:
         continue-on-error: true
       - name: Clear Files
         run: |
-            Get-ChildItem -Path "BetterGenshinImpact\bin\x64\Release\net8.0-windows10.0.22621.0\publish\win-x64\dist\BetterGI" -Recurse -Filter "*.lib" | Remove-Item -Force
-            Get-ChildItem -Path "BetterGenshinImpact\bin\x64\Release\net8.0-windows10.0.22621.0\publish\win-x64\dist\BetterGI" -Recurse -Filter "*ffmpeg*.dll" | Remove-Item -Force
-            Get-ChildItem -Path "BetterGenshinImpact\bin\x64\Release\net8.0-windows10.0.22621.0\publish\win-x64\dist\BetterGI" -Recurse -Filter "*.pdb" | Remove-Item -Force
+            Get-ChildItem -Path "BetterGenshinImpact\bin\x64\Release\net8.0-windows10.0.22621.0\publish\win-x64" -Recurse -Filter "*.lib" | Remove-Item -Force
+            Get-ChildItem -Path "BetterGenshinImpact\bin\x64\Release\net8.0-windows10.0.22621.0\publish\win-x64" -Recurse -Filter "*ffmpeg*.dll" | Remove-Item -Force
+            Get-ChildItem -Path "BetterGenshinImpact\bin\x64\Release\net8.0-windows10.0.22621.0\publish\win-x64" -Recurse -Filter "*.pdb" | Remove-Item -Force
       - uses: actions/upload-artifact@v4
         with:
           name: main
